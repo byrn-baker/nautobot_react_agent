@@ -17,7 +17,7 @@ RUN echo "==> Install dos2unix..." \
 RUN echo "==> Install requirements.." \
   && pip install --break-system-packages -U --quiet langchain_community \
   && pip install --break-system-packages streamlit --upgrade \
-  && pip install --break-system-packages openai
+  && pip install --break-system-packages ollama
 
 COPY /netbox_react_agent /netbox_react_agent/
 COPY /scripts /scripts/

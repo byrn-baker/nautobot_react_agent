@@ -4,7 +4,7 @@ import logging
 import requests
 import difflib
 import streamlit as st
-from langchain_community.chat_models import ChatOpenAI
+from langchain_community.llms import Ollama
 from langchain.agents import AgentExecutor, create_react_agent
 from langchain.prompts import PromptTemplate
 from langchain_core.tools import tool, render_text_description
@@ -203,18 +203,15 @@ def configure_page():
     st.title("NetBox Configuration")
     base_url = st.text_input("NetBox URL", placeholder="https://demo.netbox.dev")
     api_token = st.text_input("NetBox API Token", type="password", placeholder="Your API Token")
-    openai_key = st.text_input("OpenAI API Key", type="password", placeholder="Your OpenAI API Key")
 
     if st.button("Save and Continue"):
-        if not base_url or not api_token or not openai_key:
+        if not base_url or not api_token:
             st.error("All fields are required.")
         else:
             st.session_state['NETBOX_URL'] = base_url
             st.session_state['NETBOX_TOKEN'] = api_token
-            st.session_state['OPENAI_API_KEY'] = openai_key
             os.environ['NETBOX_URL'] = base_url
             os.environ['NETBOX_TOKEN'] = api_token
-            os.environ['OPENAI_API_KEY'] = openai_key
             st.success("Configuration saved! Redirecting to chat...")
             st.session_state['page'] = "chat"
 
@@ -222,7 +219,7 @@ def initialize_agent():
     global llm, agent_executor
     if not llm:
         # Initialize the LLM with the API key from session state
-        llm = ChatOpenAI(model_name="gpt-4o", openai_api_key=st.session_state['OPENAI_API_KEY'])
+        llm = Ollama(model="llama3.2", base_url="http://ollama:11434")
 
         # Define tools
         tools = [discover_apis, check_supported_url_tool, get_netbox_data_tool, create_netbox_data_tool, delete_netbox_data_tool]
@@ -285,12 +282,6 @@ def initialize_agent():
 def chat_page():
     st.title("Chat with NetBox AI Agent")
     user_input = st.text_input("Ask NetBox a question:")
-
-    # Ensure the agent is initialized
-    if "OPENAI_API_KEY" not in st.session_state:
-        st.error("Please configure NetBox and OpenAI settings first!")
-        st.session_state['page'] = "configure"
-        return
 
     initialize_agent()
 
