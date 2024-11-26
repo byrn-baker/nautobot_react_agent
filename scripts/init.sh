@@ -12,7 +12,7 @@ until curl -s http://localhost:11434/health > /dev/null; do
     sleep 2
 done
 
-# Pull the Llama 3.2 model
+# Pull the llama3.2 model
 ollama pull llama3.2
 
 # Keep the container running

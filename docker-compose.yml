@@ -17,19 +17,18 @@ services:
           devices:
             - driver: nvidia
               count: 1
-              capabilities: [ gpu ]
+              capabilities: [gpu]
     volumes:
       - ./data/ollama:/root/.ollama
     ports:
       - 11434:11434
 
-  netbox_react_agent:
-    image: johncapobianco/netbox_react_agent:netbox_react_agent
-    container_name: netbox_react_agent
-    restart: always
+  nautobot_react_agent:
     build: 
       context: ./
       dockerfile: ./docker/Dockerfile   
+    container_name: nautobot_react_agent
+    restart: always
     ports:
       - "8501:8501"
     depends_on:
