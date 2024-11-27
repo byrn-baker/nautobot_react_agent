@@ -1,11 +1,14 @@
 import requests
 import json
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 # URL to the OpenAPI specification
 openapi_url = 'https://demo.nautobot.com/api/docs/?format=openapi'
 
 # Your API token (replace 'your_api_token' with the actual token)
-api_token = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+api_token = os.getenv("NAUTOBOT_TOKEN")
 
 # HTTP headers for authentication
 headers = {
