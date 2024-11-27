@@ -1,9 +1,16 @@
-# netbox_react_agent
-An artificial intelligence ReAct Agent for NetBox 
+# nautobot_react_agent
+An artificial intelligence Nautobot ReAct Agent
 
-Welcome to the NetBox AI Agent project! This application provides a natural language interface for interacting with NetBox APIs, enabling CRUD (Create, Read, Update, Delete) operations through an intuitive chat-like interface powered by AI.
+This has been forked from https://github.com/automateyournetwork/Nautobot_react_agent. Please follow John Capobianco at the following to see what he is doing with AI. Great stuff on his channels
 
-This project simplifies network management by combining AI-driven agents with the NetBox API to streamline and automate common network tasks.
+https://bsky.app/profile/automateyournetwork.ca
+https://www.youtube.com/@johncapobianco2527
+https://x.com/John_Capobianco
+https://www.linkedin.com/in/john-capobianco-644a1515/
+
+Welcome to the Nautobot AI Agent project! This application provides a natural language interface for interacting with Nautobot APIs, enabling CRUD (Create, Read, Update, Delete) operations through an intuitive chat-like interface powered by AI.
+
+This project simplifies network management by combining AI-driven agents with the Nautobot API to streamline and automate common network tasks.
 
 ## Branches Overview
 
@@ -57,8 +64,14 @@ Optional: Ollama installed for the local branch.
 ### Clone the Repository
 
 ``` bash
-git clone https://github.com/<your-repo-name>/netbox-ai-agent.git
-cd netbox-ai-agent
+git clone https://github.com/<your-repo-name>/nautobot_react_agent.git
+cd nautobot_react_agent
+```
+
+### If you want to build your own container
+Update the docker-compose.yml with your values.
+``` bash
+docker-compose build
 ```
 
 ### Run the Application
