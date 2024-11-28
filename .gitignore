@@ -1,5 +1,3 @@
-data
 .venv/
-.vscode
-.env
-nautobot_react_agent/__pycache__/
+.vscode/
+data/

@@ -1,5 +1,3 @@
 streamlit
 langchain_community
-ollama
-python-dotenv
-pyyaml
+openai

@@ -1,2 +1,2 @@
-cd nautobot_react_agent
-streamlit run nautobot_react_agent.py
+cd netbox_react_agent
+streamlit run netbox_react_agent.py
