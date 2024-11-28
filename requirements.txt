@@ -1,5 +1,5 @@
 streamlit
+langchain_community
 ollama
-langchain-ollama
-llama-index
-openai
+python-dotenv
+pyyaml

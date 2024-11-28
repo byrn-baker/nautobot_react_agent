@@ -1,4 +1,0 @@
-- endpoint: "/api/circuits/circuits/"
-  Name: "Circuits"
-- endpoint: "/api/dcim/devices/"
-  Name: "Devices"

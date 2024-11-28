@@ -18,8 +18,10 @@ RUN echo "==> Install requirements.." \
   && pip install --break-system-packages -U --quiet langchain_community \
   && pip install --break-system-packages streamlit --upgrade \
   && pip install --break-system-packages ollama \
-  && pip install --break-system-packages pyyaml
+  && pip install --break-system-packages pyyaml \
+  && pip install --break-system-packages python-dotenv
 
+COPY .env /nautobot_react_agent/
 COPY /nautobot_react_agent /nautobot_react_agent/
 COPY /scripts /scripts/
 
