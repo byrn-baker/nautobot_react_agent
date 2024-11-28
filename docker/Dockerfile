@@ -17,11 +17,14 @@ RUN echo "==> Install dos2unix..." \
 RUN echo "==> Install requirements.." \
   && pip install --break-system-packages -U --quiet langchain_community \
   && pip install --break-system-packages streamlit --upgrade \
-  && pip install --break-system-packages ollama \
-  && pip install --break-system-packages pyyaml
+  && pip install --break-system-packages pyyaml \
+  && pip install --break-system-packages groq \
+  && pip install --break-system-packages python-dotenv
 
 COPY /nautobot_react_agent /nautobot_react_agent/
 COPY /scripts /scripts/
+COPY .env /nautobot_react_agent/.env
+
 
 RUN echo "==> Convert script..." \
   && dos2unix /scripts/startup.sh

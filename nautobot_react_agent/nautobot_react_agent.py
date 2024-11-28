@@ -4,11 +4,16 @@ import logging
 import requests
 import difflib
 import streamlit as st
-from langchain_community.llms import Ollama
+from groq import Groq
+from langchain_community.chat_models import ChatOpenAI
 from langchain.agents import AgentExecutor, create_react_agent
 from langchain.prompts import PromptTemplate
 from langchain_core.tools import tool, render_text_description
 import urllib3
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv('/nautobot_react_agent/.env')
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -245,8 +250,32 @@ def configure_page():
 def initialize_agent():
     global llm, agent_executor
     if not llm:
-        # Initialize the LLM with the API key from session state
-        llm = Ollama(model="llama3.2", base_url="http://ollama:11434")
+        # Initialize Groq as the AI agent with an API key
+        groq_api_key = os.getenv("GROQ_API_KEY")
+        if not groq_api_key:
+            raise ValueError("GROQ_API_KEY environment variable not set. Please provide a valid API key.")
+        
+        # Instantiate Groq client
+        client = Groq(api_key=groq_api_key)
+
+        # Set the Groq client as llm and define a wrapper to interact
+        class GroqLLMWrapper:
+            def __init__(self, client):
+                self.client = client
+
+            def generate_response(self, prompt, model="llama-3.1-70b-versatile"):
+                response = self.client.chat.completions.create(
+                    messages=[
+                        {
+                            "role": "user",
+                            "content": prompt,
+                        }
+                    ],
+                    model=model,
+                )
+                return response.choices[0].message.content
+
+        llm = GroqLLMWrapper(client)
 
         # Define tools
         tools = [discover_apis, check_supported_endpoint_tool, get_nautobot_data_tool]
