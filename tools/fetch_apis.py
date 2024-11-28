@@ -1,11 +1,16 @@
 import requests
 import json
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # URL to the OpenAPI specification
 openapi_url = 'https://demo.nautobot.com/api/docs/?format=openapi'
 
-# Your API token (replace 'your_api_token' with the actual token)
-api_token = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+# API token from environment variable
+api_token = os.getenv("DEMO_NAUTOBOT_API")
 
 # HTTP headers for authentication
 headers = {
@@ -19,7 +24,7 @@ if response.status_code == 200:
     # Parse the JSON content
     openapi_spec = response.json()
     
-    # Extract paths and format them
+    # Extract paths from the OpenAPI specification
     api_paths = openapi_spec.get("paths", {})
     simplified_paths = {}
 
@@ -28,29 +33,39 @@ if response.status_code == 200:
         if "/{id}/" in path or "/notes/" in path:
             continue
         
-        # Ensure the path ends with a forward slash and prepend /api/
+        # Ensure the path ends with a forward slash
         full_path = f"/api{path.rstrip('/')}/"
         
-        # Generate a human-readable name
-        name_parts = path.strip('/').split('/')
-        name = ' '.join(part.capitalize() for part in name_parts[-3:])
+        # Generate a name based on the last part of the URL path
+        path_parts = path.strip('/').split('/')
+        if path_parts:
+            name = path_parts[-1].replace('-', ' ').capitalize()
+        else:
+            name = "Unnamed Endpoint"
         
-        # Consolidate duplicate paths
+        # Consolidate duplicate paths by using the base path
         base_path = full_path.rstrip('/').split('/{')[0]
         if base_path not in simplified_paths:
             simplified_paths[base_path] = {
-                "URL": base_path + '/',  # Ensure the base path also ends with a forward slash
+                "endpoint": base_path + '/',  # Ensure base path ends with a forward slash
                 "Name": name
             }
+        else:
+            # Avoid duplicate names by appending the last segment
+            existing_name = simplified_paths[base_path]["Name"]
+            if existing_name.lower() != name.lower():
+                simplified_paths[base_path]["Name"] += f" / {name}"
     
-    # Convert the dictionary to a list
+    # Convert the dictionary to a list for output
     output_list = list(simplified_paths.values())
     
     # Save the simplified JSON content to a file
-    with open('./nautobot_react_agent/nautobot_apis.json', 'w') as json_file:
+    output_file_path = './nautobot_react_agent/nautobot_apis.json'
+    os.makedirs(os.path.dirname(output_file_path), exist_ok=True)
+    with open(output_file_path, 'w') as json_file:
         json.dump(output_list, json_file, indent=4)
     
-    print('Simplified API paths saved to simplified_api_paths.json')
+    print(f'Simplified API paths saved to {output_file_path}')
 else:
     print(f'Failed to fetch OpenAPI specification. Status code: {response.status_code}')
     print(f'Response content: {response.text}')

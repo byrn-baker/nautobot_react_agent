@@ -1,798 +1,798 @@
 [
     {
-        "URL": "/api/circuits/circuit-terminations/",
-        "Name": "Circuits Circuit-terminations"
+        "endpoint": "/api/circuits/circuit-terminations/",
+        "Name": "Circuit terminations"
     },
     {
-        "URL": "/api/circuits/circuit-types/",
-        "Name": "Circuits Circuit-types"
+        "endpoint": "/api/circuits/circuit-types/",
+        "Name": "Circuit types"
     },
     {
-        "URL": "/api/circuits/circuits/",
-        "Name": "Circuits Circuits"
+        "endpoint": "/api/circuits/circuits/",
+        "Name": "Circuits"
     },
     {
-        "URL": "/api/circuits/provider-networks/",
-        "Name": "Circuits Provider-networks"
+        "endpoint": "/api/circuits/provider-networks/",
+        "Name": "Provider networks"
     },
     {
-        "URL": "/api/circuits/providers/",
-        "Name": "Circuits Providers"
+        "endpoint": "/api/circuits/providers/",
+        "Name": "Providers"
     },
     {
-        "URL": "/api/cloud/cloud-accounts/",
-        "Name": "Cloud Cloud-accounts"
+        "endpoint": "/api/cloud/cloud-accounts/",
+        "Name": "Cloud accounts"
     },
     {
-        "URL": "/api/cloud/cloud-network-prefix-assignments/",
-        "Name": "Cloud Cloud-network-prefix-assignments"
+        "endpoint": "/api/cloud/cloud-network-prefix-assignments/",
+        "Name": "Cloud network prefix assignments"
     },
     {
-        "URL": "/api/cloud/cloud-networks/",
-        "Name": "Cloud Cloud-networks"
+        "endpoint": "/api/cloud/cloud-networks/",
+        "Name": "Cloud networks"
     },
     {
-        "URL": "/api/cloud/cloud-resource-types/",
-        "Name": "Cloud Cloud-resource-types"
+        "endpoint": "/api/cloud/cloud-resource-types/",
+        "Name": "Cloud resource types"
     },
     {
-        "URL": "/api/cloud/cloud-service-network-assignments/",
-        "Name": "Cloud Cloud-service-network-assignments"
+        "endpoint": "/api/cloud/cloud-service-network-assignments/",
+        "Name": "Cloud service network assignments"
     },
     {
-        "URL": "/api/cloud/cloud-services/",
-        "Name": "Cloud Cloud-services"
+        "endpoint": "/api/cloud/cloud-services/",
+        "Name": "Cloud services"
     },
     {
-        "URL": "/api/dcim/cables/",
-        "Name": "Dcim Cables"
+        "endpoint": "/api/dcim/cables/",
+        "Name": "Cables"
     },
     {
-        "URL": "/api/dcim/connected-device/",
-        "Name": "Dcim Connected-device"
+        "endpoint": "/api/dcim/connected-device/",
+        "Name": "Connected device"
     },
     {
-        "URL": "/api/dcim/console-connections/",
-        "Name": "Dcim Console-connections"
+        "endpoint": "/api/dcim/console-connections/",
+        "Name": "Console connections"
     },
     {
-        "URL": "/api/dcim/console-port-templates/",
-        "Name": "Dcim Console-port-templates"
+        "endpoint": "/api/dcim/console-port-templates/",
+        "Name": "Console port templates"
     },
     {
-        "URL": "/api/dcim/console-ports/",
-        "Name": "Dcim Console-ports"
+        "endpoint": "/api/dcim/console-ports/",
+        "Name": "Console ports"
     },
     {
-        "URL": "/api/dcim/console-server-port-templates/",
-        "Name": "Dcim Console-server-port-templates"
+        "endpoint": "/api/dcim/console-server-port-templates/",
+        "Name": "Console server port templates"
     },
     {
-        "URL": "/api/dcim/console-server-ports/",
-        "Name": "Dcim Console-server-ports"
+        "endpoint": "/api/dcim/console-server-ports/",
+        "Name": "Console server ports"
     },
     {
-        "URL": "/api/dcim/controller-managed-device-groups/",
-        "Name": "Dcim Controller-managed-device-groups"
+        "endpoint": "/api/dcim/controller-managed-device-groups/",
+        "Name": "Controller managed device groups"
     },
     {
-        "URL": "/api/dcim/controllers/",
-        "Name": "Dcim Controllers"
+        "endpoint": "/api/dcim/controllers/",
+        "Name": "Controllers"
     },
     {
-        "URL": "/api/dcim/device-bay-templates/",
-        "Name": "Dcim Device-bay-templates"
+        "endpoint": "/api/dcim/device-bay-templates/",
+        "Name": "Device bay templates"
     },
     {
-        "URL": "/api/dcim/device-bays/",
-        "Name": "Dcim Device-bays"
+        "endpoint": "/api/dcim/device-bays/",
+        "Name": "Device bays"
     },
     {
-        "URL": "/api/dcim/device-families/",
-        "Name": "Dcim Device-families"
+        "endpoint": "/api/dcim/device-families/",
+        "Name": "Device families"
     },
     {
-        "URL": "/api/dcim/device-redundancy-groups/",
-        "Name": "Dcim Device-redundancy-groups"
+        "endpoint": "/api/dcim/device-redundancy-groups/",
+        "Name": "Device redundancy groups"
     },
     {
-        "URL": "/api/dcim/device-types/",
-        "Name": "Dcim Device-types"
+        "endpoint": "/api/dcim/device-types/",
+        "Name": "Device types"
     },
     {
-        "URL": "/api/dcim/device-types-to-software-image-files/",
-        "Name": "Dcim Device-types-to-software-image-files"
+        "endpoint": "/api/dcim/device-types-to-software-image-files/",
+        "Name": "Device types to software image files"
     },
     {
-        "URL": "/api/dcim/devices/",
-        "Name": "Dcim Devices"
+        "endpoint": "/api/dcim/devices/",
+        "Name": "Devices"
     },
     {
-        "URL": "/api/dcim/front-port-templates/",
-        "Name": "Dcim Front-port-templates"
+        "endpoint": "/api/dcim/front-port-templates/",
+        "Name": "Front port templates"
     },
     {
-        "URL": "/api/dcim/front-ports/",
-        "Name": "Dcim Front-ports"
+        "endpoint": "/api/dcim/front-ports/",
+        "Name": "Front ports"
     },
     {
-        "URL": "/api/dcim/interface-connections/",
-        "Name": "Dcim Interface-connections"
+        "endpoint": "/api/dcim/interface-connections/",
+        "Name": "Interface connections"
     },
     {
-        "URL": "/api/dcim/interface-redundancy-group-associations/",
-        "Name": "Dcim Interface-redundancy-group-associations"
+        "endpoint": "/api/dcim/interface-redundancy-group-associations/",
+        "Name": "Interface redundancy group associations"
     },
     {
-        "URL": "/api/dcim/interface-redundancy-groups/",
-        "Name": "Dcim Interface-redundancy-groups"
+        "endpoint": "/api/dcim/interface-redundancy-groups/",
+        "Name": "Interface redundancy groups"
     },
     {
-        "URL": "/api/dcim/interface-templates/",
-        "Name": "Dcim Interface-templates"
+        "endpoint": "/api/dcim/interface-templates/",
+        "Name": "Interface templates"
     },
     {
-        "URL": "/api/dcim/interfaces/",
-        "Name": "Dcim Interfaces"
+        "endpoint": "/api/dcim/interfaces/",
+        "Name": "Interfaces"
     },
     {
-        "URL": "/api/dcim/inventory-items/",
-        "Name": "Dcim Inventory-items"
+        "endpoint": "/api/dcim/inventory-items/",
+        "Name": "Inventory items"
     },
     {
-        "URL": "/api/dcim/location-types/",
-        "Name": "Dcim Location-types"
+        "endpoint": "/api/dcim/location-types/",
+        "Name": "Location types"
     },
     {
-        "URL": "/api/dcim/locations/",
-        "Name": "Dcim Locations"
+        "endpoint": "/api/dcim/locations/",
+        "Name": "Locations"
     },
     {
-        "URL": "/api/dcim/manufacturers/",
-        "Name": "Dcim Manufacturers"
+        "endpoint": "/api/dcim/manufacturers/",
+        "Name": "Manufacturers"
     },
     {
-        "URL": "/api/dcim/module-bay-templates/",
-        "Name": "Dcim Module-bay-templates"
+        "endpoint": "/api/dcim/module-bay-templates/",
+        "Name": "Module bay templates"
     },
     {
-        "URL": "/api/dcim/module-bays/",
-        "Name": "Dcim Module-bays"
+        "endpoint": "/api/dcim/module-bays/",
+        "Name": "Module bays"
     },
     {
-        "URL": "/api/dcim/module-types/",
-        "Name": "Dcim Module-types"
+        "endpoint": "/api/dcim/module-types/",
+        "Name": "Module types"
     },
     {
-        "URL": "/api/dcim/modules/",
-        "Name": "Dcim Modules"
+        "endpoint": "/api/dcim/modules/",
+        "Name": "Modules"
     },
     {
-        "URL": "/api/dcim/platforms/",
-        "Name": "Dcim Platforms"
+        "endpoint": "/api/dcim/platforms/",
+        "Name": "Platforms"
     },
     {
-        "URL": "/api/dcim/power-connections/",
-        "Name": "Dcim Power-connections"
+        "endpoint": "/api/dcim/power-connections/",
+        "Name": "Power connections"
     },
     {
-        "URL": "/api/dcim/power-feeds/",
-        "Name": "Dcim Power-feeds"
+        "endpoint": "/api/dcim/power-feeds/",
+        "Name": "Power feeds"
     },
     {
-        "URL": "/api/dcim/power-outlet-templates/",
-        "Name": "Dcim Power-outlet-templates"
+        "endpoint": "/api/dcim/power-outlet-templates/",
+        "Name": "Power outlet templates"
     },
     {
-        "URL": "/api/dcim/power-outlets/",
-        "Name": "Dcim Power-outlets"
+        "endpoint": "/api/dcim/power-outlets/",
+        "Name": "Power outlets"
     },
     {
-        "URL": "/api/dcim/power-panels/",
-        "Name": "Dcim Power-panels"
+        "endpoint": "/api/dcim/power-panels/",
+        "Name": "Power panels"
     },
     {
-        "URL": "/api/dcim/power-port-templates/",
-        "Name": "Dcim Power-port-templates"
+        "endpoint": "/api/dcim/power-port-templates/",
+        "Name": "Power port templates"
     },
     {
-        "URL": "/api/dcim/power-ports/",
-        "Name": "Dcim Power-ports"
+        "endpoint": "/api/dcim/power-ports/",
+        "Name": "Power ports"
     },
     {
-        "URL": "/api/dcim/rack-groups/",
-        "Name": "Dcim Rack-groups"
+        "endpoint": "/api/dcim/rack-groups/",
+        "Name": "Rack groups"
     },
     {
-        "URL": "/api/dcim/rack-reservations/",
-        "Name": "Dcim Rack-reservations"
+        "endpoint": "/api/dcim/rack-reservations/",
+        "Name": "Rack reservations"
     },
     {
-        "URL": "/api/dcim/racks/",
-        "Name": "Dcim Racks"
+        "endpoint": "/api/dcim/racks/",
+        "Name": "Racks"
     },
     {
-        "URL": "/api/dcim/rear-port-templates/",
-        "Name": "Dcim Rear-port-templates"
+        "endpoint": "/api/dcim/rear-port-templates/",
+        "Name": "Rear port templates"
     },
     {
-        "URL": "/api/dcim/rear-ports/",
-        "Name": "Dcim Rear-ports"
+        "endpoint": "/api/dcim/rear-ports/",
+        "Name": "Rear ports"
     },
     {
-        "URL": "/api/dcim/software-image-files/",
-        "Name": "Dcim Software-image-files"
+        "endpoint": "/api/dcim/software-image-files/",
+        "Name": "Software image files"
     },
     {
-        "URL": "/api/dcim/software-versions/",
-        "Name": "Dcim Software-versions"
+        "endpoint": "/api/dcim/software-versions/",
+        "Name": "Software versions"
     },
     {
-        "URL": "/api/dcim/virtual-chassis/",
-        "Name": "Dcim Virtual-chassis"
+        "endpoint": "/api/dcim/virtual-chassis/",
+        "Name": "Virtual chassis"
     },
     {
-        "URL": "/api/extras/computed-fields/",
-        "Name": "Extras Computed-fields"
+        "endpoint": "/api/extras/computed-fields/",
+        "Name": "Computed fields"
     },
     {
-        "URL": "/api/extras/config-context-schemas/",
-        "Name": "Extras Config-context-schemas"
+        "endpoint": "/api/extras/config-context-schemas/",
+        "Name": "Config context schemas"
     },
     {
-        "URL": "/api/extras/config-contexts/",
-        "Name": "Extras Config-contexts"
+        "endpoint": "/api/extras/config-contexts/",
+        "Name": "Config contexts"
     },
     {
-        "URL": "/api/extras/contact-associations/",
-        "Name": "Extras Contact-associations"
+        "endpoint": "/api/extras/contact-associations/",
+        "Name": "Contact associations"
     },
     {
-        "URL": "/api/extras/contacts/",
-        "Name": "Extras Contacts"
+        "endpoint": "/api/extras/contacts/",
+        "Name": "Contacts"
     },
     {
-        "URL": "/api/extras/content-types/",
-        "Name": "Extras Content-types"
+        "endpoint": "/api/extras/content-types/",
+        "Name": "Content types"
     },
     {
-        "URL": "/api/extras/custom-field-choices/",
-        "Name": "Extras Custom-field-choices"
+        "endpoint": "/api/extras/custom-field-choices/",
+        "Name": "Custom field choices"
     },
     {
-        "URL": "/api/extras/custom-fields/",
-        "Name": "Extras Custom-fields"
+        "endpoint": "/api/extras/custom-fields/",
+        "Name": "Custom fields"
     },
     {
-        "URL": "/api/extras/custom-links/",
-        "Name": "Extras Custom-links"
+        "endpoint": "/api/extras/custom-links/",
+        "Name": "Custom links"
     },
     {
-        "URL": "/api/extras/dynamic-group-memberships/",
-        "Name": "Extras Dynamic-group-memberships"
+        "endpoint": "/api/extras/dynamic-group-memberships/",
+        "Name": "Dynamic group memberships"
     },
     {
-        "URL": "/api/extras/dynamic-groups/",
-        "Name": "Extras Dynamic-groups"
+        "endpoint": "/api/extras/dynamic-groups/",
+        "Name": "Dynamic groups"
     },
     {
-        "URL": "/api/extras/export-templates/",
-        "Name": "Extras Export-templates"
+        "endpoint": "/api/extras/export-templates/",
+        "Name": "Export templates"
     },
     {
-        "URL": "/api/extras/external-integrations/",
-        "Name": "Extras External-integrations"
+        "endpoint": "/api/extras/external-integrations/",
+        "Name": "External integrations"
     },
     {
-        "URL": "/api/extras/file-proxies/",
-        "Name": "Extras File-proxies"
+        "endpoint": "/api/extras/file-proxies/",
+        "Name": "File proxies"
     },
     {
-        "URL": "/api/extras/git-repositories/",
-        "Name": "Extras Git-repositories"
+        "endpoint": "/api/extras/git-repositories/",
+        "Name": "Git repositories"
     },
     {
-        "URL": "/api/extras/graphql-queries/",
-        "Name": "Extras Graphql-queries"
+        "endpoint": "/api/extras/graphql-queries/",
+        "Name": "Graphql queries"
     },
     {
-        "URL": "/api/extras/image-attachments/",
-        "Name": "Extras Image-attachments"
+        "endpoint": "/api/extras/image-attachments/",
+        "Name": "Image attachments"
     },
     {
-        "URL": "/api/extras/job-buttons/",
-        "Name": "Extras Job-buttons"
+        "endpoint": "/api/extras/job-buttons/",
+        "Name": "Job buttons"
     },
     {
-        "URL": "/api/extras/job-hooks/",
-        "Name": "Extras Job-hooks"
+        "endpoint": "/api/extras/job-hooks/",
+        "Name": "Job hooks"
     },
     {
-        "URL": "/api/extras/job-logs/",
-        "Name": "Extras Job-logs"
+        "endpoint": "/api/extras/job-logs/",
+        "Name": "Job logs"
     },
     {
-        "URL": "/api/extras/job-results/",
-        "Name": "Extras Job-results"
+        "endpoint": "/api/extras/job-results/",
+        "Name": "Job results"
     },
     {
-        "URL": "/api/extras/jobs/",
-        "Name": "Extras Jobs"
+        "endpoint": "/api/extras/jobs/",
+        "Name": "Jobs / {name} / Run / Variables"
     },
     {
-        "URL": "/api/extras/metadata-choices/",
-        "Name": "Extras Metadata-choices"
+        "endpoint": "/api/extras/metadata-choices/",
+        "Name": "Metadata choices"
     },
     {
-        "URL": "/api/extras/metadata-types/",
-        "Name": "Extras Metadata-types"
+        "endpoint": "/api/extras/metadata-types/",
+        "Name": "Metadata types"
     },
     {
-        "URL": "/api/extras/object-changes/",
-        "Name": "Extras Object-changes"
+        "endpoint": "/api/extras/object-changes/",
+        "Name": "Object changes"
     },
     {
-        "URL": "/api/extras/object-metadata/",
-        "Name": "Extras Object-metadata"
+        "endpoint": "/api/extras/object-metadata/",
+        "Name": "Object metadata"
     },
     {
-        "URL": "/api/extras/relationship-associations/",
-        "Name": "Extras Relationship-associations"
+        "endpoint": "/api/extras/relationship-associations/",
+        "Name": "Relationship associations"
     },
     {
-        "URL": "/api/extras/relationships/",
-        "Name": "Extras Relationships"
+        "endpoint": "/api/extras/relationships/",
+        "Name": "Relationships"
     },
     {
-        "URL": "/api/extras/roles/",
-        "Name": "Extras Roles"
+        "endpoint": "/api/extras/roles/",
+        "Name": "Roles"
     },
     {
-        "URL": "/api/extras/saved-views/",
-        "Name": "Extras Saved-views"
+        "endpoint": "/api/extras/saved-views/",
+        "Name": "Saved views"
     },
     {
-        "URL": "/api/extras/scheduled-jobs/",
-        "Name": "Extras Scheduled-jobs"
+        "endpoint": "/api/extras/scheduled-jobs/",
+        "Name": "Scheduled jobs"
     },
     {
-        "URL": "/api/extras/secrets/",
-        "Name": "Extras Secrets"
+        "endpoint": "/api/extras/secrets/",
+        "Name": "Secrets"
     },
     {
-        "URL": "/api/extras/secrets-groups/",
-        "Name": "Extras Secrets-groups"
+        "endpoint": "/api/extras/secrets-groups/",
+        "Name": "Secrets groups"
     },
     {
-        "URL": "/api/extras/secrets-groups-associations/",
-        "Name": "Extras Secrets-groups-associations"
+        "endpoint": "/api/extras/secrets-groups-associations/",
+        "Name": "Secrets groups associations"
     },
     {
-        "URL": "/api/extras/static-group-associations/",
-        "Name": "Extras Static-group-associations"
+        "endpoint": "/api/extras/static-group-associations/",
+        "Name": "Static group associations"
     },
     {
-        "URL": "/api/extras/statuses/",
-        "Name": "Extras Statuses"
+        "endpoint": "/api/extras/statuses/",
+        "Name": "Statuses"
     },
     {
-        "URL": "/api/extras/tags/",
-        "Name": "Extras Tags"
+        "endpoint": "/api/extras/tags/",
+        "Name": "Tags"
     },
     {
-        "URL": "/api/extras/teams/",
-        "Name": "Extras Teams"
+        "endpoint": "/api/extras/teams/",
+        "Name": "Teams"
     },
     {
-        "URL": "/api/extras/user-saved-view-associations/",
-        "Name": "Extras User-saved-view-associations"
+        "endpoint": "/api/extras/user-saved-view-associations/",
+        "Name": "User saved view associations"
     },
     {
-        "URL": "/api/extras/webhooks/",
-        "Name": "Extras Webhooks"
+        "endpoint": "/api/extras/webhooks/",
+        "Name": "Webhooks"
     },
     {
-        "URL": "/api/graphql/",
+        "endpoint": "/api/graphql/",
         "Name": "Graphql"
     },
     {
-        "URL": "/api/ipam/ip-address-to-interface/",
-        "Name": "Ipam Ip-address-to-interface"
+        "endpoint": "/api/ipam/ip-address-to-interface/",
+        "Name": "Ip address to interface"
     },
     {
-        "URL": "/api/ipam/ip-addresses/",
-        "Name": "Ipam Ip-addresses"
+        "endpoint": "/api/ipam/ip-addresses/",
+        "Name": "Ip addresses"
     },
     {
-        "URL": "/api/ipam/namespaces/",
-        "Name": "Ipam Namespaces"
+        "endpoint": "/api/ipam/namespaces/",
+        "Name": "Namespaces"
     },
     {
-        "URL": "/api/ipam/prefix-location-assignments/",
-        "Name": "Ipam Prefix-location-assignments"
+        "endpoint": "/api/ipam/prefix-location-assignments/",
+        "Name": "Prefix location assignments"
     },
     {
-        "URL": "/api/ipam/prefixes/",
-        "Name": "Ipam Prefixes"
+        "endpoint": "/api/ipam/prefixes/",
+        "Name": "Prefixes"
     },
     {
-        "URL": "/api/ipam/rirs/",
-        "Name": "Ipam Rirs"
+        "endpoint": "/api/ipam/rirs/",
+        "Name": "Rirs"
     },
     {
-        "URL": "/api/ipam/route-targets/",
-        "Name": "Ipam Route-targets"
+        "endpoint": "/api/ipam/route-targets/",
+        "Name": "Route targets"
     },
     {
-        "URL": "/api/ipam/services/",
-        "Name": "Ipam Services"
+        "endpoint": "/api/ipam/services/",
+        "Name": "Services"
     },
     {
-        "URL": "/api/ipam/vlan-groups/",
-        "Name": "Ipam Vlan-groups"
+        "endpoint": "/api/ipam/vlan-groups/",
+        "Name": "Vlan groups"
     },
     {
-        "URL": "/api/ipam/vlan-location-assignments/",
-        "Name": "Ipam Vlan-location-assignments"
+        "endpoint": "/api/ipam/vlan-location-assignments/",
+        "Name": "Vlan location assignments"
     },
     {
-        "URL": "/api/ipam/vlans/",
-        "Name": "Ipam Vlans"
+        "endpoint": "/api/ipam/vlans/",
+        "Name": "Vlans"
     },
     {
-        "URL": "/api/ipam/vrf-device-assignments/",
-        "Name": "Ipam Vrf-device-assignments"
+        "endpoint": "/api/ipam/vrf-device-assignments/",
+        "Name": "Vrf device assignments"
     },
     {
-        "URL": "/api/ipam/vrf-prefix-assignments/",
-        "Name": "Ipam Vrf-prefix-assignments"
+        "endpoint": "/api/ipam/vrf-prefix-assignments/",
+        "Name": "Vrf prefix assignments"
     },
     {
-        "URL": "/api/ipam/vrfs/",
-        "Name": "Ipam Vrfs"
+        "endpoint": "/api/ipam/vrfs/",
+        "Name": "Vrfs"
     },
     {
-        "URL": "/api/plugins/bgp/address-families/",
-        "Name": "Plugins Bgp Address-families"
+        "endpoint": "/api/plugins/bgp/address-families/",
+        "Name": "Address families"
     },
     {
-        "URL": "/api/plugins/bgp/autonomous-system-ranges/",
-        "Name": "Plugins Bgp Autonomous-system-ranges"
+        "endpoint": "/api/plugins/bgp/autonomous-system-ranges/",
+        "Name": "Autonomous system ranges"
     },
     {
-        "URL": "/api/plugins/bgp/autonomous-systems/",
-        "Name": "Plugins Bgp Autonomous-systems"
+        "endpoint": "/api/plugins/bgp/autonomous-systems/",
+        "Name": "Autonomous systems"
     },
     {
-        "URL": "/api/plugins/bgp/peer-endpoint-address-families/",
-        "Name": "Plugins Bgp Peer-endpoint-address-families"
+        "endpoint": "/api/plugins/bgp/peer-endpoint-address-families/",
+        "Name": "Peer endpoint address families"
     },
     {
-        "URL": "/api/plugins/bgp/peer-endpoints/",
-        "Name": "Plugins Bgp Peer-endpoints"
+        "endpoint": "/api/plugins/bgp/peer-endpoints/",
+        "Name": "Peer endpoints"
     },
     {
-        "URL": "/api/plugins/bgp/peer-group-address-families/",
-        "Name": "Plugins Bgp Peer-group-address-families"
+        "endpoint": "/api/plugins/bgp/peer-group-address-families/",
+        "Name": "Peer group address families"
     },
     {
-        "URL": "/api/plugins/bgp/peer-group-templates/",
-        "Name": "Plugins Bgp Peer-group-templates"
+        "endpoint": "/api/plugins/bgp/peer-group-templates/",
+        "Name": "Peer group templates"
     },
     {
-        "URL": "/api/plugins/bgp/peer-groups/",
-        "Name": "Plugins Bgp Peer-groups"
+        "endpoint": "/api/plugins/bgp/peer-groups/",
+        "Name": "Peer groups"
     },
     {
-        "URL": "/api/plugins/bgp/peerings/",
-        "Name": "Plugins Bgp Peerings"
+        "endpoint": "/api/plugins/bgp/peerings/",
+        "Name": "Peerings"
     },
     {
-        "URL": "/api/plugins/bgp/routing-instances/",
-        "Name": "Plugins Bgp Routing-instances"
+        "endpoint": "/api/plugins/bgp/routing-instances/",
+        "Name": "Routing instances"
     },
     {
-        "URL": "/api/plugins/chatops/accessgrant/",
-        "Name": "Plugins Chatops Accessgrant"
+        "endpoint": "/api/plugins/chatops/accessgrant/",
+        "Name": "Accessgrant"
     },
     {
-        "URL": "/api/plugins/chatops/commandlog/",
-        "Name": "Plugins Chatops Commandlog"
+        "endpoint": "/api/plugins/chatops/commandlog/",
+        "Name": "Commandlog"
     },
     {
-        "URL": "/api/plugins/chatops/commandtoken/",
-        "Name": "Plugins Chatops Commandtoken"
+        "endpoint": "/api/plugins/chatops/commandtoken/",
+        "Name": "Commandtoken"
     },
     {
-        "URL": "/api/plugins/circuit-maintenance/circuitimpact/",
-        "Name": "Plugins Circuit-maintenance Circuitimpact"
+        "endpoint": "/api/plugins/circuit-maintenance/circuitimpact/",
+        "Name": "Circuitimpact"
     },
     {
-        "URL": "/api/plugins/circuit-maintenance/maintenance/",
-        "Name": "Plugins Circuit-maintenance Maintenance"
+        "endpoint": "/api/plugins/circuit-maintenance/maintenance/",
+        "Name": "Maintenance"
     },
     {
-        "URL": "/api/plugins/circuit-maintenance/note/",
-        "Name": "Plugins Circuit-maintenance Note"
+        "endpoint": "/api/plugins/circuit-maintenance/note/",
+        "Name": "Note"
     },
     {
-        "URL": "/api/plugins/circuit-maintenance/notificationsource/",
-        "Name": "Plugins Circuit-maintenance Notificationsource"
+        "endpoint": "/api/plugins/circuit-maintenance/notificationsource/",
+        "Name": "Notificationsource"
     },
     {
-        "URL": "/api/plugins/circuit-maintenance/parsednotification/",
-        "Name": "Plugins Circuit-maintenance Parsednotification"
+        "endpoint": "/api/plugins/circuit-maintenance/parsednotification/",
+        "Name": "Parsednotification"
     },
     {
-        "URL": "/api/plugins/circuit-maintenance/rawnotification/",
-        "Name": "Plugins Circuit-maintenance Rawnotification"
+        "endpoint": "/api/plugins/circuit-maintenance/rawnotification/",
+        "Name": "Rawnotification"
     },
     {
-        "URL": "/api/plugins/design-builder/change-records/",
-        "Name": "Plugins Design-builder Change-records"
+        "endpoint": "/api/plugins/design-builder/change-records/",
+        "Name": "Change records"
     },
     {
-        "URL": "/api/plugins/design-builder/change-sets/",
-        "Name": "Plugins Design-builder Change-sets"
+        "endpoint": "/api/plugins/design-builder/change-sets/",
+        "Name": "Change sets"
     },
     {
-        "URL": "/api/plugins/design-builder/deployments/",
-        "Name": "Plugins Design-builder Deployments"
+        "endpoint": "/api/plugins/design-builder/deployments/",
+        "Name": "Deployments"
     },
     {
-        "URL": "/api/plugins/design-builder/designs/",
-        "Name": "Plugins Design-builder Designs"
+        "endpoint": "/api/plugins/design-builder/designs/",
+        "Name": "Designs"
     },
     {
-        "URL": "/api/plugins/firewall/address-object/",
-        "Name": "Plugins Firewall Address-object"
+        "endpoint": "/api/plugins/firewall/address-object/",
+        "Name": "Address object"
     },
     {
-        "URL": "/api/plugins/firewall/address-object-group/",
-        "Name": "Plugins Firewall Address-object-group"
+        "endpoint": "/api/plugins/firewall/address-object-group/",
+        "Name": "Address object group"
     },
     {
-        "URL": "/api/plugins/firewall/application-object/",
-        "Name": "Plugins Firewall Application-object"
+        "endpoint": "/api/plugins/firewall/application-object/",
+        "Name": "Application object"
     },
     {
-        "URL": "/api/plugins/firewall/application-object-group/",
-        "Name": "Plugins Firewall Application-object-group"
+        "endpoint": "/api/plugins/firewall/application-object-group/",
+        "Name": "Application object group"
     },
     {
-        "URL": "/api/plugins/firewall/capirca-policy/",
-        "Name": "Plugins Firewall Capirca-policy"
+        "endpoint": "/api/plugins/firewall/capirca-policy/",
+        "Name": "Capirca policy"
     },
     {
-        "URL": "/api/plugins/firewall/fqdn/",
-        "Name": "Plugins Firewall Fqdn"
+        "endpoint": "/api/plugins/firewall/fqdn/",
+        "Name": "Fqdn"
     },
     {
-        "URL": "/api/plugins/firewall/ip-range/",
-        "Name": "Plugins Firewall Ip-range"
+        "endpoint": "/api/plugins/firewall/ip-range/",
+        "Name": "Ip range"
     },
     {
-        "URL": "/api/plugins/firewall/nat-policy/",
-        "Name": "Plugins Firewall Nat-policy"
+        "endpoint": "/api/plugins/firewall/nat-policy/",
+        "Name": "Nat policy"
     },
     {
-        "URL": "/api/plugins/firewall/nat-policy-device-association/",
-        "Name": "Plugins Firewall Nat-policy-device-association"
+        "endpoint": "/api/plugins/firewall/nat-policy-device-association/",
+        "Name": "Nat policy device association"
     },
     {
-        "URL": "/api/plugins/firewall/nat-policy-dynamic-group-association/",
-        "Name": "Plugins Firewall Nat-policy-dynamic-group-association"
+        "endpoint": "/api/plugins/firewall/nat-policy-dynamic-group-association/",
+        "Name": "Nat policy dynamic group association"
     },
     {
-        "URL": "/api/plugins/firewall/nat-policy-rule/",
-        "Name": "Plugins Firewall Nat-policy-rule"
+        "endpoint": "/api/plugins/firewall/nat-policy-rule/",
+        "Name": "Nat policy rule"
     },
     {
-        "URL": "/api/plugins/firewall/policy/",
-        "Name": "Plugins Firewall Policy"
+        "endpoint": "/api/plugins/firewall/policy/",
+        "Name": "Policy"
     },
     {
-        "URL": "/api/plugins/firewall/policy-device-association/",
-        "Name": "Plugins Firewall Policy-device-association"
+        "endpoint": "/api/plugins/firewall/policy-device-association/",
+        "Name": "Policy device association"
     },
     {
-        "URL": "/api/plugins/firewall/policy-dynamic-group-association/",
-        "Name": "Plugins Firewall Policy-dynamic-group-association"
+        "endpoint": "/api/plugins/firewall/policy-dynamic-group-association/",
+        "Name": "Policy dynamic group association"
     },
     {
-        "URL": "/api/plugins/firewall/policy-rule/",
-        "Name": "Plugins Firewall Policy-rule"
+        "endpoint": "/api/plugins/firewall/policy-rule/",
+        "Name": "Policy rule"
     },
     {
-        "URL": "/api/plugins/firewall/service-object/",
-        "Name": "Plugins Firewall Service-object"
+        "endpoint": "/api/plugins/firewall/service-object/",
+        "Name": "Service object"
     },
     {
-        "URL": "/api/plugins/firewall/service-object-group/",
-        "Name": "Plugins Firewall Service-object-group"
+        "endpoint": "/api/plugins/firewall/service-object-group/",
+        "Name": "Service object group"
     },
     {
-        "URL": "/api/plugins/firewall/user-object/",
-        "Name": "Plugins Firewall User-object"
+        "endpoint": "/api/plugins/firewall/user-object/",
+        "Name": "User object"
     },
     {
-        "URL": "/api/plugins/firewall/user-object-group/",
-        "Name": "Plugins Firewall User-object-group"
+        "endpoint": "/api/plugins/firewall/user-object-group/",
+        "Name": "User object group"
     },
     {
-        "URL": "/api/plugins/firewall/zone/",
-        "Name": "Plugins Firewall Zone"
+        "endpoint": "/api/plugins/firewall/zone/",
+        "Name": "Zone"
     },
     {
-        "URL": "/api/plugins/floor-plan/floor-plan-tiles/",
-        "Name": "Plugins Floor-plan Floor-plan-tiles"
+        "endpoint": "/api/plugins/floor-plan/floor-plan-tiles/",
+        "Name": "Floor plan tiles"
     },
     {
-        "URL": "/api/plugins/floor-plan/floor-plans/",
-        "Name": "Plugins Floor-plan Floor-plans"
+        "endpoint": "/api/plugins/floor-plan/floor-plans/",
+        "Name": "Floor plans"
     },
     {
-        "URL": "/api/plugins/golden-config/compliance-feature/",
-        "Name": "Plugins Golden-config Compliance-feature"
+        "endpoint": "/api/plugins/golden-config/compliance-feature/",
+        "Name": "Compliance feature"
     },
     {
-        "URL": "/api/plugins/golden-config/compliance-rule/",
-        "Name": "Plugins Golden-config Compliance-rule"
+        "endpoint": "/api/plugins/golden-config/compliance-rule/",
+        "Name": "Compliance rule"
     },
     {
-        "URL": "/api/plugins/golden-config/config-compliance/",
-        "Name": "Plugins Golden-config Config-compliance"
+        "endpoint": "/api/plugins/golden-config/config-compliance/",
+        "Name": "Config compliance"
     },
     {
-        "URL": "/api/plugins/golden-config/config-plan/",
-        "Name": "Plugins Golden-config Config-plan"
+        "endpoint": "/api/plugins/golden-config/config-plan/",
+        "Name": "Config plan"
     },
     {
-        "URL": "/api/plugins/golden-config/config-remove/",
-        "Name": "Plugins Golden-config Config-remove"
+        "endpoint": "/api/plugins/golden-config/config-remove/",
+        "Name": "Config remove"
     },
     {
-        "URL": "/api/plugins/golden-config/config-replace/",
-        "Name": "Plugins Golden-config Config-replace"
+        "endpoint": "/api/plugins/golden-config/config-replace/",
+        "Name": "Config replace"
     },
     {
-        "URL": "/api/plugins/golden-config/golden-config/",
-        "Name": "Plugins Golden-config Golden-config"
+        "endpoint": "/api/plugins/golden-config/golden-config/",
+        "Name": "Golden config"
     },
     {
-        "URL": "/api/plugins/golden-config/golden-config-settings/",
-        "Name": "Plugins Golden-config Golden-config-settings"
+        "endpoint": "/api/plugins/golden-config/golden-config-settings/",
+        "Name": "Golden config settings"
     },
     {
-        "URL": "/api/plugins/golden-config/remediation-setting/",
-        "Name": "Plugins Golden-config Remediation-setting"
+        "endpoint": "/api/plugins/golden-config/remediation-setting/",
+        "Name": "Remediation setting"
     },
     {
-        "URL": "/api/plugins/nautobot-data-validation-engine/data-compliance/",
-        "Name": "Plugins Nautobot-data-validation-engine Data-compliance"
+        "endpoint": "/api/plugins/nautobot-data-validation-engine/data-compliance/",
+        "Name": "Data compliance"
     },
     {
-        "URL": "/api/plugins/nautobot-data-validation-engine/min-max-rules/",
-        "Name": "Plugins Nautobot-data-validation-engine Min-max-rules"
+        "endpoint": "/api/plugins/nautobot-data-validation-engine/min-max-rules/",
+        "Name": "Min max rules"
     },
     {
-        "URL": "/api/plugins/nautobot-data-validation-engine/regex-rules/",
-        "Name": "Plugins Nautobot-data-validation-engine Regex-rules"
+        "endpoint": "/api/plugins/nautobot-data-validation-engine/regex-rules/",
+        "Name": "Regex rules"
     },
     {
-        "URL": "/api/plugins/nautobot-data-validation-engine/required-rules/",
-        "Name": "Plugins Nautobot-data-validation-engine Required-rules"
+        "endpoint": "/api/plugins/nautobot-data-validation-engine/required-rules/",
+        "Name": "Required rules"
     },
     {
-        "URL": "/api/plugins/nautobot-data-validation-engine/unique-rules/",
-        "Name": "Plugins Nautobot-data-validation-engine Unique-rules"
+        "endpoint": "/api/plugins/nautobot-data-validation-engine/unique-rules/",
+        "Name": "Unique rules"
     },
     {
-        "URL": "/api/plugins/nautobot-device-lifecycle-mgmt/contact/",
-        "Name": "Plugins Nautobot-device-lifecycle-mgmt Contact"
+        "endpoint": "/api/plugins/nautobot-device-lifecycle-mgmt/contact/",
+        "Name": "Contact"
     },
     {
-        "URL": "/api/plugins/nautobot-device-lifecycle-mgmt/contract/",
-        "Name": "Plugins Nautobot-device-lifecycle-mgmt Contract"
+        "endpoint": "/api/plugins/nautobot-device-lifecycle-mgmt/contract/",
+        "Name": "Contract"
     },
     {
-        "URL": "/api/plugins/nautobot-device-lifecycle-mgmt/cve/",
-        "Name": "Plugins Nautobot-device-lifecycle-mgmt Cve"
+        "endpoint": "/api/plugins/nautobot-device-lifecycle-mgmt/cve/",
+        "Name": "Cve"
     },
     {
-        "URL": "/api/plugins/nautobot-device-lifecycle-mgmt/device-validated-software-result/",
-        "Name": "Plugins Nautobot-device-lifecycle-mgmt Device-validated-software-result"
+        "endpoint": "/api/plugins/nautobot-device-lifecycle-mgmt/device-validated-software-result/",
+        "Name": "Device validated software result"
     },
     {
-        "URL": "/api/plugins/nautobot-device-lifecycle-mgmt/hardware/",
-        "Name": "Plugins Nautobot-device-lifecycle-mgmt Hardware"
+        "endpoint": "/api/plugins/nautobot-device-lifecycle-mgmt/hardware/",
+        "Name": "Hardware"
     },
     {
-        "URL": "/api/plugins/nautobot-device-lifecycle-mgmt/inventory-item-validated-software-result/",
-        "Name": "Plugins Nautobot-device-lifecycle-mgmt Inventory-item-validated-software-result"
+        "endpoint": "/api/plugins/nautobot-device-lifecycle-mgmt/inventory-item-validated-software-result/",
+        "Name": "Inventory item validated software result"
     },
     {
-        "URL": "/api/plugins/nautobot-device-lifecycle-mgmt/provider/",
-        "Name": "Plugins Nautobot-device-lifecycle-mgmt Provider"
+        "endpoint": "/api/plugins/nautobot-device-lifecycle-mgmt/provider/",
+        "Name": "Provider"
     },
     {
-        "URL": "/api/plugins/nautobot-device-lifecycle-mgmt/software/",
-        "Name": "Plugins Nautobot-device-lifecycle-mgmt Software"
+        "endpoint": "/api/plugins/nautobot-device-lifecycle-mgmt/software/",
+        "Name": "Software"
     },
     {
-        "URL": "/api/plugins/nautobot-device-lifecycle-mgmt/software-image/",
-        "Name": "Plugins Nautobot-device-lifecycle-mgmt Software-image"
+        "endpoint": "/api/plugins/nautobot-device-lifecycle-mgmt/software-image/",
+        "Name": "Software image"
     },
     {
-        "URL": "/api/plugins/nautobot-device-lifecycle-mgmt/validated-software/",
-        "Name": "Plugins Nautobot-device-lifecycle-mgmt Validated-software"
+        "endpoint": "/api/plugins/nautobot-device-lifecycle-mgmt/validated-software/",
+        "Name": "Validated software"
     },
     {
-        "URL": "/api/plugins/nautobot-device-lifecycle-mgmt/vulnerability/",
-        "Name": "Plugins Nautobot-device-lifecycle-mgmt Vulnerability"
+        "endpoint": "/api/plugins/nautobot-device-lifecycle-mgmt/vulnerability/",
+        "Name": "Vulnerability"
     },
     {
-        "URL": "/api/status/",
+        "endpoint": "/api/status/",
         "Name": "Status"
     },
     {
-        "URL": "/api/swagger/",
+        "endpoint": "/api/swagger/",
         "Name": "Swagger"
     },
     {
-        "URL": "/api/swagger.json/",
+        "endpoint": "/api/swagger.json/",
         "Name": "Swagger.json"
     },
     {
-        "URL": "/api/swagger.yaml/",
+        "endpoint": "/api/swagger.yaml/",
         "Name": "Swagger.yaml"
     },
     {
-        "URL": "/api/tenancy/tenant-groups/",
-        "Name": "Tenancy Tenant-groups"
+        "endpoint": "/api/tenancy/tenant-groups/",
+        "Name": "Tenant groups"
     },
     {
-        "URL": "/api/tenancy/tenants/",
-        "Name": "Tenancy Tenants"
+        "endpoint": "/api/tenancy/tenants/",
+        "Name": "Tenants"
     },
     {
-        "URL": "/api/users/config/",
-        "Name": "Users Config"
+        "endpoint": "/api/users/config/",
+        "Name": "Config"
     },
     {
-        "URL": "/api/users/groups/",
-        "Name": "Users Groups"
+        "endpoint": "/api/users/groups/",
+        "Name": "Groups"
     },
     {
-        "URL": "/api/users/permissions/",
-        "Name": "Users Permissions"
+        "endpoint": "/api/users/permissions/",
+        "Name": "Permissions"
     },
     {
-        "URL": "/api/users/tokens/",
-        "Name": "Users Tokens"
+        "endpoint": "/api/users/tokens/",
+        "Name": "Tokens"
     },
     {
-        "URL": "/api/users/users/",
-        "Name": "Users Users"
+        "endpoint": "/api/users/users/",
+        "Name": "Users"
     },
     {
-        "URL": "/api/virtualization/cluster-groups/",
-        "Name": "Virtualization Cluster-groups"
+        "endpoint": "/api/virtualization/cluster-groups/",
+        "Name": "Cluster groups"
     },
     {
-        "URL": "/api/virtualization/cluster-types/",
-        "Name": "Virtualization Cluster-types"
+        "endpoint": "/api/virtualization/cluster-types/",
+        "Name": "Cluster types"
     },
     {
-        "URL": "/api/virtualization/clusters/",
-        "Name": "Virtualization Clusters"
+        "endpoint": "/api/virtualization/clusters/",
+        "Name": "Clusters"
     },
     {
-        "URL": "/api/virtualization/interfaces/",
-        "Name": "Virtualization Interfaces"
+        "endpoint": "/api/virtualization/interfaces/",
+        "Name": "Interfaces"
     },
     {
-        "URL": "/api/virtualization/virtual-machines/",
-        "Name": "Virtualization Virtual-machines"
+        "endpoint": "/api/virtualization/virtual-machines/",
+        "Name": "Virtual machines"
     }
 ]
