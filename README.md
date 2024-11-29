@@ -7,10 +7,10 @@ This project simplifies network management by combining AI-driven agents with th
 
 This has been forked from https://github.com/automateyournetwork/Nautobot_react_agent. Please follow John Capobianco at the following to see what he is doing with AI. Great stuff on his channels
 
-https://bsky.app/profile/automateyournetwork.ca
-https://www.youtube.com/@johncapobianco2527
-https://x.com/John_Capobianco
-https://www.linkedin.com/in/john-capobianco-644a1515/
+- https://bsky.app/profile/automateyournetwork.ca
+- https://www.youtube.com/@johncapobianco2527
+- https://x.com/John_Capobianco
+- https://www.linkedin.com/in/john-capobianco-644a1515/
 
 ## Branches Overview
 
