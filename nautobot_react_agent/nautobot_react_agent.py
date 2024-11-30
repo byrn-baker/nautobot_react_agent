@@ -24,17 +24,6 @@ llm = None
 agent_executor = None
 
 # Attempting to limit the responses so chatgpt can handle larger responses
-def filter_fields(data, keys_to_keep):
-    """
-    Filter the fields of a list of dictionaries.
-    Args:
-        data (list): List of dictionaries to filter.
-        keys_to_keep (list): Keys to retain in each dictionary.
-    Returns:
-        list: Filtered list of dictionaries.
-    """
-    return [{key: obj[key] for key in keys_to_keep if key in obj} for obj in data]
-
 def chunk_large_data(data, chunk_size):
     """
     Split a large list into smaller chunks.
@@ -46,7 +35,7 @@ def chunk_large_data(data, chunk_size):
     """
     return [data[i:i + chunk_size] for i in range(0, len(data), chunk_size)]
 
-def summarize_large_data(data, max_items=50):
+def summarize_large_data(data, max_items=100):
     """
     Summarize large data by selecting only a subset of records.
     Args:
@@ -68,8 +57,6 @@ def estimate_token_usage(data, model="gpt-4"):
     """
     encoder = tiktoken.encoding_for_model(model)
     return len(encoder.encode(str(data)))
-
-import time
 
 def openai_api_call(data, retries=3):
     """
@@ -153,10 +140,6 @@ class NautobotController:
     )
         response.raise_for_status()
         data = response.json()
-
-        # If keys_to_keep is provided, filter the fields
-        if keys_to_keep:
-            data["results"] = filter_fields(data.get("results", []), keys_to_keep)
         
         return data
 
@@ -178,7 +161,22 @@ class NautobotController:
         )
         response.raise_for_status()
         return response.json()
+    
+    def graphql_query(self, query: str, variables: dict = None):
+        # Ensure no backticks are present in the query
+        if "```" in query:
+            raise ValueError("Query contains invalid markdown formatting (backticks). Please use plain text.")
 
+        endpoint = f"{self.nautobot}/api/graphql/"
+        payload = {"query": query, "variables": variables or {}}
+        try:
+            response = requests.post(endpoint, headers=self.headers, json=payload, verify=False)
+            response.raise_for_status()
+            return response.json()
+        except requests.HTTPError as e:
+            if response.content:
+                print(f"GraphQL error response: {response.content.decode()}")
+            raise
 
 # Function to load supported endpoints with their names from a JSON file
 def load_endpoints(file_path='nautobot_apis.json'):
@@ -266,28 +264,39 @@ def check_supported_endpoint_tool(api_endpoint: str) -> dict:
     return result
 
 @tool
-def get_nautobot_data_tool(api_endpoint: str, chunk_size: int = 100) -> dict:
-    """Fetch data from Nautobot, chunk it, and prepare for OpenAI."""
+def get_nautobot_data_tool(query: str, variables: dict = None) -> dict:
+    """
+    Fetch data from Nautobot using a GraphQL query. Provides flexibility to process any query dynamically.
+
+    Args:
+        query (str): The GraphQL query string.
+        variables (dict): Optional variables for parameterized queries.
+
+    Returns:
+        dict: The full response from the GraphQL query, or an error message.
+    """
     try:
         nautobot_controller = NautobotController(
             nautobot_url=os.getenv("NAUTOBOT_URL"),
             api_token=os.getenv("DEMO_NAUTOBOT_API")
         )
-        # Fetch data from the API
-        api_response = nautobot_controller.get_api(api_endpoint)
 
-        # Extract results and count
-        results = api_response.get("results", [])
-        total_count = api_response.get("count", len(results))
+        # Fetch data using the provided GraphQL query and variables
+        variables = variables or {}
+        api_response = nautobot_controller.graphql_query(query, variables)
 
-        # Process large data
-        processed_responses = process_large_data_for_openai(results, chunk_size=chunk_size)
+        # Ensure the response contains data
+        data = api_response.get("data", {})
+        if data:
+            return {"status": "success", "data": data}
+        else:
+            return {"status": "error", "message": "No data found in the GraphQL response."}
 
-        return {"count": total_count, "responses": processed_responses}
     except requests.HTTPError as e:
-        return {"error": f"Failed to fetch data from Nautobot: {str(e)}"}
+        return {"status": "error", "message": f"Failed to fetch data from Nautobot GraphQL API: {str(e)}"}
     except Exception as e:
-        return {"error": f"An unexpected error occurred: {str(e)}"}
+        return {"status": "error", "message": f"An unexpected error occurred: {str(e)}"}
+
 
 
 @tool
@@ -412,33 +421,52 @@ def initialize_agent():
         TOOLS:
         - discover_apis: Discovers available Nautobot APIs from a local JSON file.
         - check_supported_endpoint_tool: Checks if an API endpoint or Name is supported by Nautobot.
-        - get_nautobot_data_tool: Fetches data from Nautobot using the specified API endpoint.
         - create_nautobot_data_tool: Creates new data in Nautobot using the specified API endpoint and payload.
         - delete_nautobot_data_tool: Deletes data from Nautobot using the specified API endpoint.
+        - get_nautobot_data_tool: Fetches data from Nautobot using GraphQL.
+
 
         GUIDELINES:
-        1. **Matching Endpoint Context**: Use user input context (e.g., "device types" refers to hardware) to select the most relevant endpoint.
-        2. **Handling Ambiguity**:
-        - If multiple endpoints match, use the most specific match relevant to the context.
-        - If ambiguity remains, clearly communicate the options and ask the user for clarification.
-        3. **Fallback on Clear Intent**:
-        - If the user mentions "device types" explicitly, prioritize `/api/dcim/device-types/`.
-        - For terms like "devices," use `/api/dcim/devices/` unless context specifies otherwise.
-        4. For questions about totals or quantities (e.g., "How many devices do I have?"):
-        - Look for the `count` key in the API response.
-        - If `count` exists, provide it as the answer.
-        - If `count` is missing, calculate the total based on the length of the `results` array.
-
+        1. Use check_supported_url_tool to validate ambiguous or unknown URLs or Names.
+        2. If certain about the URL, directly use 'get_netbox_data_tool, create_netbox_data_tool, or delete_netbox_data_tool.
+        3. Follow a structured response format to ensure consistency.
+        4. You can create and use GraphQL queries to fetch data efficiently.
+        5. If asked about a count of devices, you can just count the number of devices returned in the response.
+          - Example: count the number of data['devices']['name'] returned in the results. This method should be used for any counts of devices, interfaces, etc.
+        6. Process data as needed to extract relevant information.
+        7. Tools do not support markdown formatting in inputs.
+        8. Nautobot does not use sites instead it uses locations.
+        9. If question is about devices, the GraphQL query might be:
+        Example:
+        query
+            devices
+                name
+        10. If asked about a what is connected to a speicific devices interface, the GraphQL query might be:
+        Example:
+            devices
+                interfaces
+                    connected_interface
+                        name
+                        device 
+                            name
+        11. If asked about a count of devices, a count of devices with a specific manufactuer, or a count of devices with a specific status, the GraphQL query might be:
+        Example:
+            devices manufacturer: "Arista"
+                name
+                device_type
+                    manufacturer
+                        name
+                status
+                    name
+        
         FORMAT:
-        Thought: [Your thought process]
+        Thought: [Think process]
         Action: [Tool Name]
         Action Input: [Tool Input]
         Observation: [Tool Response]
-        Final Answer: [Your response to the user]
+        Final Answer: [Answer to user]
 
-        Begin:
-
-        Previous conversation history:
+        Previous conversation:
         {chat_history}
 
         New input: {input}
@@ -499,7 +527,7 @@ def chat_page():
                 })
 
                 # Handle large responses if "chunks" are present
-                if "chunks" in response:
+                if "chunks" in response and len(response) > 1000:
                     st.write("Processing large response in chunks...")
                     processed_chunks = process_large_data_for_openai(response["chunks"], chunk_size=100, summarize=True)
                     
