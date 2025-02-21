@@ -4,7 +4,7 @@ import logging
 import requests
 import difflib
 import streamlit as st
-from langchain_community.llms import Ollama
+from langchain_ollama import OllamaLLM
 from langchain.agents import AgentExecutor, create_react_agent
 from langchain.prompts import PromptTemplate
 from langchain_core.tools import tool, render_text_description
@@ -21,7 +21,6 @@ logging.basicConfig(level=logging.INFO)
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Global variables for lazy initialization
-llm = None
 agent_executor = None
 
 # NautobotController for CRUD Operations
@@ -43,11 +42,11 @@ class NautobotController:
         )
         response.raise_for_status()
         return response.json()
-    
-# Function to load supported URLs with their names from a JSON file
+
+# Load supported URLs from JSON
 def load_urls(file_path='nautobot_apis.json'):
     if not os.path.exists(file_path):
-        return {"error": f"endpoints file '{file_path}' not found."}
+        return {"error": f"Endpoints file '{file_path}' not found."}
     try:
         with open(file_path, 'r') as f:
             data = json.load(f)
@@ -55,11 +54,10 @@ def load_urls(file_path='nautobot_apis.json'):
     except Exception as e:
         return {"error": f"Error loading endpoints: {str(e)}"}
 
-
 def check_endpoint_support(api_endpoint: str) -> dict:
     endpoint_list = load_urls()
     if "error" in endpoint_list:
-        return endpoint_list  # Return error if loading URLs failed
+        return endpoint_list
 
     urls = [entry[0] for entry in endpoint_list]
     names = [entry[1] for entry in endpoint_list]
@@ -70,92 +68,48 @@ def check_endpoint_support(api_endpoint: str) -> dict:
     if close_endpoint_matches:
         closest_endpoint = close_endpoint_matches[0]
         matching_name = [entry[1] for entry in endpoint_list if entry[0] == closest_endpoint][0]
-        return {"status": "supported", "closest_endpoint": closest_endpoint, "closest_name": matching_name}
+        return {"status": "supported", "endpoint": closest_endpoint, "name": matching_name}
     elif close_name_matches:
         closest_name = close_name_matches[0]
         closest_endpoint = [entry[0] for entry in endpoint_list if entry[1] == closest_name][0]
-        return {"status": "supported", "closest_endpoint": closest_endpoint, "closest_name": closest_name}
+        return {"status": "supported", "endpoint": closest_endpoint, "name": closest_name}
     else:
         return {"status": "unsupported", "message": f"The input '{api_endpoint}' is not supported."}
 
-# Tools for interacting with nautobot
+# Tools for interacting with Nautobot
 @tool
 def discover_apis(dummy_input: str = None) -> dict:
-    """Discover available nautobot APIs from a local JSON file."""
+    """Discover available Nautobot API endpoints from a local JSON file."""
     try:
-        if not os.path.exists("nautobot_apis.json"):
-            return {"error": "API JSON file not found. Please ensure 'nautobot_apis.json' exists in the project directory."}
-        
         with open("nautobot_apis.json", "r") as f:
             data = json.load(f)
         return {"apis": data, "message": "APIs successfully loaded from JSON file"}
     except Exception as e:
         return {"error": f"An error occurred while loading the APIs: {str(e)}"}
 
-
 @tool
 def check_supported_endpoint_tool(api_endpoint: str) -> dict:
-    """Check if an API URL or Name is supported by nautobot."""
+    """Check if an API URL or Name is supported by Nautobot."""
     result = check_endpoint_support(api_endpoint)
-    if result.get('status') == 'supported':
-        closest_endpoint = result['closest_endpoint']
-        closest_name = result['closest_name']
-        return {
-            "status": "supported",
-            "message": f"The closest supported API URL is '{closest_endpoint}' ({closest_name}).",
-            "action": {
-                "next_tool": "get_nautobot_data_tool",
-                "input": closest_endpoint
-            }
-        }
     logging.info(f"check_supported_endpoint_tool result: {result}")
     return result
 
-
 @tool
 def get_nautobot_data_tool(api_endpoint: str) -> dict:
-    """Fetch data from nautobot."""
+    """Fetch data from Nautobot using a specified API endpoint."""
     try:
-        nautobot_controller = NautobotController(
-            nautobot_url=os.getenv("NAUTOBOT_URL"),
-            api_token=os.getenv("NAUTOBOT_TOKEN")
-        )
+        nautobot_controller = NautobotController(NAUTOBOT_URL, NAUTOBOT_TOKEN)
         data = nautobot_controller.get_api(api_endpoint)
         return data
     except requests.HTTPError as e:
-        return {"error": f"Failed to fetch data from nautobot: {str(e)}"}
+        return {"error": f"Failed to fetch data from Nautobot: {str(e)}"}
     except Exception as e:
         return {"error": f"An unexpected error occurred: {str(e)}"}
 
-
-def process_agent_response(response):
-    logging.info(f"Agent response: {response}")
-    if response and response.get("status") == "supported" and "next_tool" in response.get("action", {}):
-        next_tool = response["action"]["next_tool"]
-        tool_input = response["action"]["input"]
-
-        # Sanitize the tool input to ensure it's a clean string
-        tool_input = str(tool_input).strip()
-
-        # Automatically invoke the next tool
-        return agent_executor.invoke({
-            "input": tool_input,
-            "chat_history": st.session_state.chat_history,
-            "agent_scratchpad": "",
-            "tool": next_tool
-        })
-    else:
-        return response
-
-
-
-# ============================================================
 # Streamlit App
-# ============================================================
-
 def configure_page():
     st.title("Nautobot Configuration")
-    base_url = st.text_input("Nautobot URL", placeholder="https://demo.netbox.com")
+    base_url = st.text_input("Nautobot URL", placeholder="https://demo.nautobot.com")
     api_token = st.text_input("Nautobot API Token", type="password", placeholder="Your API Token")
 
     if st.button("Save and Continue"):
@@ -170,92 +124,77 @@ def configure_page():
             st.session_state['page'] = "chat"
 
 def initialize_agent():
-    global llm, agent_executor
-    if not llm:
-        # Initialize the LLM with the API key from session state
-        llm = Ollama(model="llama3.2", base_url="http://ollama:11434")
-
-        # Define tools
+    global agent_executor
+    if not agent_executor:
+        llm = OllamaLLM(
+            model="deepseek-r1",
+            base_url="http://ollama:11434"
+        )
         tools = [discover_apis, check_supported_endpoint_tool, get_nautobot_data_tool]
-
-        # Create the prompt template
         tool_descriptions = render_text_description(tools)
-        # Create the PromptTemplate
+        tool_names = ", ".join([tool.name for tool in tools])
+
         template = """
-        Assistant is a Nautobot network assistant. It answers questions by using tools to fetch live data from Nautobot. It cannot solve tasks without using these tools.
+        You are a Nautobot assistant that answers questions by querying live data from Nautobot using tools. You cannot answer without using tools.
 
-        TOOLS:
-        - discover_apis: Discover available Nautobot API endpoints from a local JSON file.
-        - check_supported_endpoint_tool: Check if an API URL or Name is supported by Nautobot.
-        - get_nautobot_data_tool: Fetch data from Nautobot using a specified API endpoint.
+        Available Tools:
+        {tools}
+        Tool Names: {tool_names}
 
-        TASK:
-        1. Understand the user's question and extract relevant keywords (e.g., "devices").
-        2. Use tools to validate and fetch data:
-        - Always use `check_supported_endpoint_tool` to validate an API endpoint.
-        - Always use `get_nautobot_data_tool` to fetch data from a validated endpoint.
-        3. Process the data to answer the user's question. For example:
-        - To count devices, count the entries in the `results` key of the JSON response.
-        4. Provide a clear, concise answer based on the processed data.
+        Instructions:
+        1. For every query, start by using `discover_apis` to list all available Nautobot endpoints from `nautobot_apis.json`.
+        2. Analyze the user's question to identify key entities (e.g., device name 'ams01-asw-01', 'primary IPv4 address').
+        3. From the `discover_apis` output, select the most relevant endpoint that matches the query (e.g., '/api/dcim/devices/' for device details).
+        4. Use `check_supported_endpoint_tool` to validate the selected endpoint.
+        5. If supported, use `get_nautobot_data_tool` with appropriate filters (e.g., '?name=ams01-asw-01&depth=1&exclude_m2m=false') to fetch data.
+        6. Process the response to extract the requested information (e.g., 'primary_ip4.address').
+        7. If no data is found, say: "No results found in your Nautobot instance."
+        8. If an error occurs, report it clearly.
+        9. Always follow this sequence: discover endpoints, validate, fetch data, then answer.
 
-        IMPORTANT RULES:
-        - Do not fabricate answers. Use only the data from the tools.
-        - If no results are found, inform the user: "There are no devices in your Nautobot instance."
+        Response Format for Each Step:
+        ```json
+        {{
+          "thought": "Your reasoning here",
+          "action": "tool_name",
+          "input": "tool_input",
+          "observation": "tool_output",
+          "final_answer": "Your answer here (only in the last step)"
+        }}
+        ```
 
-        FORMAT:
-        Thought: [Your thought process]
-        Action: [Tool Name]
-        Action Input: [Tool Input]
-        Observation: [Tool Response]
-        Final Answer: [Your response based on the observation]
-
-        EXAMPLE:
-        User Input: "How many devices do I have?"
-        Thought: I recognize the keyword "devices" and need to validate the API endpoint.
-        Action: check_supported_endpoint_tool
-        Action Input: "/api/dcim/devices/"
-        Observation: The endpoint is valid and corresponds to the keyword "devices."
-        Thought: I need to fetch the actual data from Nautobot.
-        Action: get_nautobot_data_tool
-        Action Input: "/api/dcim/devices/"
-        Observation: The API response contains a `results` key with 10 entries.
-        Final Answer: "You have 10 devices in your Nautobot instance."
-
-        Begin:
+        Chat History:
         {chat_history}
-        New input: {input}
 
+        User Input:
+        {input}
+
+        Agent Scratchpad:
         {agent_scratchpad}
         """
-
-
 
         prompt_template = PromptTemplate(
             template=template,
             input_variables=["input", "chat_history", "agent_scratchpad"],
             partial_variables={
                 "tools": tool_descriptions,
-                "tool_names": ", ".join([t.name for t in tools])
+                "tool_names": tool_names
             }
         )
 
-        # Create the ReAct agent
         agent = create_react_agent(llm=llm, tools=tools, prompt=prompt_template)
-
-        # Create the AgentExecutor
         agent_executor = AgentExecutor(
             agent=agent,
             tools=tools,
             handle_parsing_errors=True,
             verbose=True,
-            max_iterations=10
+            max_iterations=15
         )
 
 def chat_page():
     st.title("Chat with Nautobot AI Agent")
     user_input = st.text_input("Ask Nautobot a question:", key="user_input")
 
-    # Ensure the agent is initialized
     if "NAUTOBOT_TOKEN" not in st.session_state:
         st.error("Please configure Nautobot settings first!")
         st.session_state['page'] = "configure"
@@ -263,54 +202,56 @@ def chat_page():
 
     initialize_agent()
 
-    # Initialize session state variables if not already set
     if "chat_history" not in st.session_state:
-        st.session_state.chat_history = ""
+        st.session_state.chat_history = []
 
     if "conversation" not in st.session_state:
         st.session_state.conversation = []
 
-    # Button to submit the question
-    if st.button("Send"):
-        if user_input:
-            # Add the user input to the conversation history
-            st.session_state.conversation.append({"role": "user", "content": user_input})
+    if st.button("Send") and user_input:
+        st.session_state.conversation.append({"role": "user", "content": user_input})
+        try:
+            chat_history_str = "\n".join([f"{msg['role']}: {msg['content']}" for msg in st.session_state.chat_history])
 
-            # Invoke the agent with the user input and current chat history
-            try:
-                response = agent_executor.invoke({
-                    "input": user_input,
-                    "chat_history": st.session_state.chat_history,
-                    "agent_scratchpad": ""  # Initialize agent scratchpad as an empty string
-                })
+            response = agent_executor.invoke({
+                "input": user_input,
+                "chat_history": chat_history_str,
+                "agent_scratchpad": ""
+            })
 
-                # Process the agent's response
-                final_response = process_agent_response(response)
+            if isinstance(response, dict) and "output" in response:
+                output = response["output"]
+                try:
+                    parsed_output = json.loads(output) if isinstance(output, str) else output
+                    final_answer = parsed_output.get("final_answer", "No answer provided.")
+                    observation = parsed_output.get("observation", {})
+                except json.JSONDecodeError:
+                    final_answer = output
+                    observation = {}
+            else:
+                final_answer = str(response)
+                observation = {}
 
-                # Extract the final answer
-                if "results" in final_response and isinstance(final_response["results"], list):
-                    total_results = len(final_response["results"])
-                    if total_results > 100:
-                        st.write(f"**Note:** Too many results ({total_results}). Showing the first 100 entries.")
-                        st.write(final_response["results"][:100])
-                    else:
-                        st.write(final_response["results"])
+            st.write(f"**Question:** {user_input}")
+            st.write(f"**Answer:** {final_answer}")
+
+            if isinstance(observation, dict) and "results" in observation:
+                results = observation["results"]
+                total_results = len(results)
+                if total_results > 100:
+                    st.write(f"**Note:** Too many results ({total_results}). Showing first 100.")
+                    st.write(results[:100])
+                elif total_results > 0:
+                    st.write(results)
                 else:
-                    final_answer = final_response.get('output', 'No answer provided.')
-                    st.write(f"**Question:** {user_input}")
-                    st.write(f"**Answer:** {final_answer}")
+                    st.write("No results found.")
 
-                # Display the question and answer
-                st.write(f"**Question:** {user_input}")
-                st.write(f"**Answer:** {final_answer}")
+            st.session_state.chat_history.append({"role": "user", "content": user_input})
+            st.session_state.chat_history.append({"role": "assistant", "content": final_answer})
 
-                # Update chat history with the new conversation
-                st.session_state.chat_history += f"User: {user_input}\nAssistant: {final_answer}\n"
-
-            except Exception as e:
-                logging.error(f"Error during agent invocation: {str(e)}")
-                st.error(f"An error occurred: {str(e)}. Please check your inputs or server status.")
-
+        except Exception as e:
+            logging.error(f"Error during agent invocation: {str(e)}")
+            st.error(f"An error occurred: {str(e)}. Ensure Nautobot URL and token are correct.")
 
 # Page Navigation
 if 'page' not in st.session_state:

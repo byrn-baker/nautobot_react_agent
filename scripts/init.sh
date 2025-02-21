@@ -12,8 +12,11 @@ until curl -s http://localhost:11434/health > /dev/null; do
     sleep 2
 done
 
+# install langchain
+pip install langchain-ollama
+
 # Pull the llama3.2:1b model
-ollama pull llama3.2
+ollama pull deepseek-r1
 
 # Keep the container running
 tail -f /dev/null

@@ -1,32 +1,39 @@
-version: '3.6'
+version: '3.8'  # Updated to a more recent version for better feature support
 
 networks:
   ollama:
+    driver: bridge
 
 services:
   ollama:
-    image: ollama/ollama
-    build: 
-      context: ./
-      dockerfile: ./ollama/Dockerfile     
+    image: ollama/ollama:latest  # Use official image unless custom build is necessary
+    # Remove build unless you need a custom Ollama Dockerfile
+    # build:
+    #   context: ./
+    #   dockerfile: ./ollama/Dockerfile
+    runtime: nvidia  # Explicitly use NVIDIA runtime
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all  # Ensure all GPUs are visible
+      - OLLAMA_HOST=0.0.0.0:11434
+      - OLLAMA_MODELS=/root/.ollama/models
+    volumes:
+      - ./data/ollama:/root/.ollama
+    ports:
+      - "11434:11434"
     networks:
       - ollama
-    deploy:
+    deploy:  # Optional if using Swarm; otherwise, rely on runtime
       resources:
         reservations:
           devices:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
-    volumes:
-      - ./data/ollama:/root/.ollama
-    ports:
-      - 11434:11434
 
   nautobot_react_agent:
-    build: 
+    build:
       context: ./
-      dockerfile: ./docker/Dockerfile   
+      dockerfile: ./docker/Dockerfile
     container_name: nautobot_react_agent
     restart: always
     ports:
@@ -36,4 +43,8 @@ services:
     networks:
       - ollama
     environment:
-      - OLLAMA_URL=http://ollama:11434      
+      - OLLAMA_URL=http://ollama:11434
+      - NAUTOBOT_URL=${NAUTOBOT_URL}  # Load from .env
+      - NAUTOBOT_TOKEN=${NAUTOBOT_TOKEN}  # Load from .env
+    volumes:
+      - .nautobot_react_agent/nautobot_apis.json:/app/nautobot_apis.json
