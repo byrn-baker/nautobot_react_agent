@@ -26,12 +26,19 @@ agent_executor = None
 def execute_graphql(query: str, variables: dict = None) -> dict:
     """Execute a dynamically constructed GraphQL query."""
     nautobot_url = os.getenv("NAUTOBOT_URL")
-    api_token = os.getenv("DEMO_NAUTOBOT_API")
+    api_token = os.getenv("NAUTOBOT_TOKEN")
     headers = {"Authorization": f"Token {api_token}"}
     endpoint = f"{nautobot_url.rstrip('/')}/api/graphql/"
 
+    # Log the raw input exactly as received
+    logging.debug(f"Raw query input: {repr(query)}")
+
+    # Ensure no double-escaping by replacing any erroneous escapes (only if needed)
+    cleaned_query = query.replace('\\"', '"').strip()
+    logging.debug(f"Cleaned query: {repr(cleaned_query)}")
+
     try:
-        payload = {"query": query, "variables": variables or {}}
+        payload = {"query": cleaned_query, "variables": variables or {}}
         logging.debug(f"GraphQL query payload: {payload}")
         response = requests.post(endpoint, headers=headers, json=payload, verify=False)
         response.raise_for_status()
@@ -48,7 +55,7 @@ def execute_graphql(query: str, variables: dict = None) -> dict:
 def execute_rest_call(endpoint: str, method: str = "GET", payload: dict = None) -> dict:
     """Execute a dynamically constructed REST API call."""
     nautobot_url = os.getenv("NAUTOBOT_URL")
-    api_token = os.getenv("DEMO_NAUTOBOT_API")
+    api_token = os.getenv("NAUTOBOT_TOKEN")
     headers = {"Authorization": f"Token {api_token}", "Accept": "application/json"}
 
     try:
@@ -124,7 +131,7 @@ def query_nautobot(query: str, variables: dict = None) -> dict:
     try:
         nautobot_controller = NautobotController(
             nautobot_url=os.getenv("NAUTOBOT_URL"),
-            api_token=os.getenv("DEMO_NAUTOBOT_API")
+            api_token=os.getenv("NAUTOBOT_TOKEN")
         )
         result = nautobot_controller.graphql_query(query, variables)
         logging.debug(f"Result from Nautobot: {result}")
@@ -151,25 +158,22 @@ def initialize_agent():
         GUIDELINES:
         1. Use REST API for simple, CRUD-style operations where the endpoint and method can be derived from the user request.
         2. Use GraphQL for nested or complex queries where relationships between objects are required.
-        3. Dynamically construct queries or endpoints based on the user's intent. Examples:
+        3. Dynamically construct queries or endpoints based on the user's intent. Interpret the request to determine if it targets multiple items or a specific item.
+        4. For GraphQL:
+           - Use 'devices' (plural) to query multiple devices or filter by name (e.g., devices(name: "device_name")).
+           - Use 'device' (singular) only when querying by UUID (e.g., device(id: "uuid")).
+           - Do NOT use 'count' as a field on 'devices' or 'device'—use 'devices_count' for counting.
+        5. Examples:
            - User: "List all devices"
-             GraphQL Query:
-             query {{
-               devices {{
-                 name
-               }}
-             }}
-           - User: "Show interfaces for device R1"
-             GraphQL Query:
-             query {{
-               device(name: "R1") {{
-                 interfaces {{
-                   name
-                   status
-                 }}
-               }}
-             }}
-           - User: "You can't use count to get a total number of devices"
+             Action Input: "query {{ devices {{ name }} }}"
+           - User: "Show all devices with their primary IPs"
+             Action Input: "query {{ devices {{ name primary_ip4 {{ address }} }} }}"
+           - User: "Show interfaces for device with name R1"
+             Action Input: "query {{ devices(name: \"R1\") {{ name interfaces {{ name status }} }} }}"
+           - User: "Show primary IP for device ams01-asw-01"
+             Action Input: "query {{ devices(name: \"ams01-asw-01\") {{ name primary_ip4 {{ address }} }} }}"
+           - User: "How many devices are there?"
+             Action Input: "query {{ devices_count }}"
            - User: "Delete device R1"
              REST API:
              Endpoint: /api/dcim/devices/R1/
@@ -178,7 +182,7 @@ def initialize_agent():
         FORMAT:
         Thought: [Reasoning]
         Action: [Tool Name]
-        Action Input: [Constructed query or API endpoint]
+        Action Input: [Constructed query or API endpoint as a plain string]
         Observation: [Tool Response]
         Final Answer: [Answer to user]
 
@@ -211,7 +215,7 @@ def configure_page():
     st.title("Configure API Settings")
     nautobot_url = os.getenv("NAUTOBOT_URL", "")
     openai_key = os.getenv("OPENAI_API", "")
-    api_token = os.getenv("DEMO_NAUTOBOT_API", "")
+    api_token = os.getenv("NAUTOBOT_TOKEN", "")
 
     nautobot_url_input = st.text_input("Nautobot URL", value=nautobot_url, placeholder="https://demo.nautobot.com")
     openai_token_input = st.text_input("OpenAI API Token", value=openai_key, type="password")
@@ -222,10 +226,10 @@ def configure_page():
             st.error("All fields are required.")
         else:
             st.session_state['NAUTOBOT_URL'] = nautobot_url_input
-            st.session_state['DEMO_NAUTOBOT_API'] = nautobot_token_input
+            st.session_state['NAUTOBOT_TOKEN'] = nautobot_token_input
             st.session_state['OPENAI_API_KEY'] = openai_token_input
             os.environ['NAUTOBOT_URL'] = nautobot_url_input
-            os.environ['DEMO_NAUTOBOT_API'] = nautobot_token_input
+            os.environ['NAUTOBOT_TOKEN'] = nautobot_token_input
             os.environ['OPENAI_API_KEY'] = openai_token_input
             st.success("Configuration saved! Redirecting to chat...")
             st.session_state['page'] = "chat"

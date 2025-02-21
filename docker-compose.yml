@@ -1,7 +1,7 @@
 version: '3.6'
 
 services:
-  netbox_react_agent:
+  nautobot_react_agent:
     image: byrn-baker/nautobot_react_agent_openai:nautobot_react_agent_openai
     container_name: nautobot_react_agent_openai
     restart: always
