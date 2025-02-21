@@ -19,7 +19,8 @@ RUN echo "==> Install requirements.." \
   && pip install --break-system-packages streamlit --upgrade \
   && pip install --break-system-packages python-dotenv \
   && pip install --break-system-packages openai \
-  && pip install --break-system-packages tiktoken
+  && pip install --break-system-packages tiktoken \
+  && pip install --break-system-packages graphql-core
 
 COPY /nautobot_react_agent /nautobot_react_agent/
 COPY .env /nautobot_react_agent/
