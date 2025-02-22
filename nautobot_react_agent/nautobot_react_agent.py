@@ -52,13 +52,19 @@ def execute_graphql(query: str, variables: dict = None) -> dict:
         return {"error": str(e)}
 
 @tool
-def execute_rest_call(endpoint: str, method: str = "GET", payload: dict = None) -> dict:
+def execute_rest_call(input_str: str) -> dict:
     """Execute a dynamically constructed REST API call."""
     nautobot_url = os.getenv("NAUTOBOT_URL")
     api_token = os.getenv("NAUTOBOT_TOKEN")
     headers = {"Authorization": f"Token {api_token}", "Accept": "application/json"}
 
     try:
+        # Parse the JSON string into a dict
+        input_dict = json.loads(input_str)
+        endpoint = input_dict["endpoint"]
+        method = input_dict.get("method", "GET")
+        payload = input_dict.get("payload", None)
+
         url = f"{nautobot_url.rstrip('/')}{endpoint}"
         logging.debug(f"Executing REST API call: {method} {url} with payload {payload}")
         if method.upper() == "GET":
@@ -70,7 +76,12 @@ def execute_rest_call(endpoint: str, method: str = "GET", payload: dict = None) 
         else:
             raise ValueError(f"Unsupported HTTP method: {method}")
         response.raise_for_status()
-        return response.json()
+        result = response.json()
+        logging.debug(f"REST API response: {result}")
+        return result
+    except json.JSONDecodeError as e:
+        logging.error(f"Failed to parse Action Input: {input_str} - {str(e)}")
+        return {"error": f"Invalid Action Input format: {str(e)}"}
     except Exception as e:
         logging.error(f"Failed to execute REST call: {str(e)}", exc_info=True)
         return {"error": str(e)}
@@ -156,33 +167,49 @@ def initialize_agent():
         {tools}
 
         GUIDELINES:
-        1. Use REST API for simple, CRUD-style operations where the endpoint and method can be derived from the user request.
-        2. Use GraphQL for nested or complex queries where relationships between objects are required.
-        3. Dynamically construct queries or endpoints based on the user's intent. Interpret the request to determine if it targets multiple items or a specific item.
+        1. Use 'execute_rest_call' for:
+           - Counting objects (e.g., devices, IPs) by querying REST endpoints like '/api/dcim/devices/' or '/api/ipam/ip-addresses/' with method 'GET'. The 'count' field in the response provides the total.
+           - Simple CRUD operations (e.g., delete a device).
+           - Use 'limit=0' in the payload to get just the count without fetching all items.
+           - For filtering (e.g., by manufacturer), use the appropriate REST filter parameters (e.g., 'manufacturer' with the slug value).
+        2. Use 'execute_graphql' for:
+           - Queries requiring specific data about individual items (e.g., a device's primary IP or an interface's status).
+           - Nested or complex queries involving relationships between objects.
+        3. Dynamically construct queries or endpoints based on the user's intent. Interpret whether the request is for a count or specific item data.
         4. For GraphQL:
            - Use 'devices' (plural) to query multiple devices or filter by name (e.g., devices(name: "device_name")).
            - Use 'device' (singular) only when querying by UUID (e.g., device(id: "uuid")).
-           - Do NOT use 'count' as a field on 'devices' or 'device'—use 'devices_count' for counting.
+           - Do NOT invent fields like 'count' or 'manufacturer'—stick to valid schema fields.
         5. Examples:
-           - User: "List all devices"
-             Action Input: "query {{ devices {{ name }} }}"
-           - User: "Show all devices with their primary IPs"
-             Action Input: "query {{ devices {{ name primary_ip4 {{ address }} }} }}"
-           - User: "Show interfaces for device with name R1"
-             Action Input: "query {{ devices(name: \"R1\") {{ name interfaces {{ name status }} }} }}"
-           - User: "Show primary IP for device ams01-asw-01"
-             Action Input: "query {{ devices(name: \"ams01-asw-01\") {{ name primary_ip4 {{ address }} }} }}"
            - User: "How many devices are there?"
-             Action Input: "query {{ devices_count }}"
+             Action: execute_rest_call
+             Action Input: {{"endpoint": "/api/dcim/devices/", "method": "GET", "payload": {{"limit": 0}}}}
+             Observation: Look for 'count' in the response (e.g., {{"count": 42, ...}})
+           - User: "How many IP addresses are there?"
+             Action: execute_rest_call
+             Action Input: {{"endpoint": "/api/ipam/ip-addresses/", "method": "GET", "payload": {{"limit": 0}}}}
+             Observation: Look for 'count' in the response
+           - User: "How many Arista devices do I have?"
+             Action: execute_rest_call
+             Action Input: {{"endpoint": "/api/dcim/devices/", "method": "GET", "payload": {{"manufacturer": "arista", "limit": 0}}}}
+             Observation: Look for 'count' in the response
+           - User: "List all devices"
+             Action: execute_graphql
+             Action Input: "query {{ devices {{ name }} }}"
+           - User: "Show primary IP for device ams01-asw-01"
+             Action: execute_graphql
+             Action Input: "query {{ devices(name: \"ams01-asw-01\") {{ name primary_ip4 {{ address }} }} }}"
+           - User: "Show interfaces for device with name R1"
+             Action: execute_graphql
+             Action Input: "query {{ devices(name: \"R1\") {{ name interfaces {{ name status }} }} }}"
            - User: "Delete device R1"
-             REST API:
-             Endpoint: /api/dcim/devices/R1/
-             Method: DELETE
+             Action: execute_rest_call
+             Action Input: {{"endpoint": "/api/dcim/devices/R1/", "method": "DELETE"}}
 
         FORMAT:
         Thought: [Reasoning]
         Action: [Tool Name]
-        Action Input: [Constructed query or API endpoint as a plain string]
+        Action Input: ["query string" for GraphQL, or {{"endpoint": "...", "method": "...", "payload": {{...}}}} for REST]
         Observation: [Tool Response]
         Final Answer: [Answer to user]
 
